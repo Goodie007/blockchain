@@ -11,12 +11,13 @@ from django.views.decorators.csrf import csrf_exempt #New
 # Create your views here.
 class BlockChain:
     def __init__(self):
+        self.transactions = []
         self.chain = []
-        self.create_block(nonce = 1, previous_hash = '0')
+        self.create_block(nonce = 1, previous_hash = '0',)
         self.nodes = set() #New
 
 
-    def create_block(self, nonce, previous_hash, transactions):
+    def create_block(self, nonce, previous_hash,):
         block = {'index': len(self.chain) + 1,
                  'timestamp': str(datetime.datetime.now()),
                  'nonce': nonce,
@@ -163,13 +164,14 @@ def connect_node(request): #New
         return JsonResponse(response)
 
     # Replacing the chain by the longest chain if needed
-    def replace_chain(request): #New
-        if request.method == 'GET':
-            is_chain_replaced = blockchain.replace_chain()
-            if is_chain_replaced:
-                response = {'message': 'The nodes had different chains so the chain was replaced by the longest one.',
-                            'new_chain': blockchain.chain}
-            else:
-                response = {'message': 'All good. The chain is the largest one.',
-                            'actual_chain': blockchain.chain}
-        return JsonResponse(response)
+    
+def replace_chain(request): #New
+    if request.method == 'GET':
+        is_chain_replaced = blockchain.replace_chain()
+        if is_chain_replaced:
+            response = {'message': 'The nodes had different chains so the chain was replaced by the longest one.',
+                        'new_chain': blockchain.chain}
+        else:
+            response = {'message': 'All good. The chain is the largest one.',
+                        'actual_chain': blockchain.chain}
+    return JsonResponse(response)
