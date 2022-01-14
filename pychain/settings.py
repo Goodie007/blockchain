@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+import psycopg2
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -128,3 +131,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+
+
+
+# # Connect to your postgres DB
+# conn = psycopg2.connect("dbname=test user=postgres")
+
+# # Open a cursor to perform database operations
+# cur = conn.cursor()
+
+# # Execute a query
+# cur.execute("SELECT * FROM my_data")
+
+# # Retrieve query results
+# records = cur.fetchall()
