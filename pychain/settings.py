@@ -26,8 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-(k!mqx1)r!qbo#01uew@=8gh2k9+5(_#(fll0yr63#bmd8id%w'
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sudocoin.herokuapp.com', 'localhost', '127.0.0.1']
 
